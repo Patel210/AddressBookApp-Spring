@@ -10,35 +10,38 @@ import com.bridgelabz.addressbookapp.model.Contact;
 
 @Service
 public class AddressBookService implements IAddressBookService {
+	
+	private List<Contact> addressBook = new ArrayList<Contact>();
 
 	@Override
 	public List<Contact> getContacts() {
-		List<Contact> contacts = new ArrayList<Contact>();
-		contacts.add(new Contact(1, new ContactDTO("Vishal Gupta", "13, Malta Road")));
-		return contacts;
+		return addressBook;
 	}
 
 	@Override
 	public Contact getContactById(int contactId) {
-		Contact contact =  new Contact(contactId, new ContactDTO("Vishal Gupta", "13, Malta Road"));
-		return contact;
+		return addressBook.get(contactId - 1);
 	}
 
 	@Override
 	public Contact addContact(ContactDTO contactDTO) {
-		Contact contact =  new Contact(1, contactDTO);
+		Contact contact =  new Contact(addressBook.size() + 1, contactDTO);
+		addressBook.add(contact);
 		return contact;
 	}
 
 	@Override
-	public Contact updateContact(ContactDTO contactDTO) {
-		Contact contact =  new Contact(1, contactDTO);
+	public Contact updateContact(int contactId, ContactDTO contactDTO) {
+		Contact contact =  this.getContactById(contactId);
+		contact.setName(contactDTO.name);
+		contact.setAddress(contactDTO.address);
+		addressBook.set(contactId - 1, contact);
 		return contact;
 	}
 
 	@Override
 	public void deleteContact(int contactId) {
-		// TODO Auto-generated method stub
+		addressBook.remove(contactId - 1);
 		
 	}
 

@@ -55,13 +55,14 @@ public class AddressBookController {
 	public ResponseEntity<ResponseDTO> updateContact(@PathVariable("contactId") int contactId, 
 												@RequestBody ContactDTO contactDTO) {
 		Contact contact = null;
-		contact = addressBookService.updateContact(contactDTO);
+		contact = addressBookService.updateContact(contactId, contactDTO);
 		ResponseDTO responseDTO =  new ResponseDTO("Updated Contact Successfully!", contact);
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{contactId}")
 	public ResponseEntity<ResponseDTO> deleteContact(@PathVariable("contactId") int contactId) {
+		addressBookService.deleteContact(contactId);
 		ResponseDTO responseDTO =  new ResponseDTO("Deleted Successfully!", "Deleted ID: " + contactId);
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}

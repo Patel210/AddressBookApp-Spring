@@ -9,7 +9,7 @@ public interface IAddressBookService {
 	List<Contact> getContacts();
 	Contact getContactById(int contactId);
 	Contact addContact(ContactDTO contactDTO);
-	Contact updateContact(ContactDTO contactDTO);
+	Contact updateContact(int contactId, ContactDTO contactDTO);
 	void deleteContact(int contactId);
 	
 }
