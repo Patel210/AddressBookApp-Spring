@@ -12,34 +12,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.addressbookapp.dto.ContactDTO;
+import com.bridgelabz.addressbookapp.dto.ResponseDTO;
+import com.bridgelabz.addressbookapp.model.Contact;
 
 @RestController
 @RequestMapping("/addressbookservice")
 public class AddressBookController {
 	
 	@RequestMapping(value = {"", "/", "/get"}) 
-	public ResponseEntity<String> getContacts() {
-		return new ResponseEntity<String>("Get Call Success!", HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> getContacts() {
+		Contact contact = null;
+		contact = new Contact(1, new ContactDTO("Vishal Gupta", "13, Malta Road"));
+		ResponseDTO responseDTO =  new ResponseDTO("Get Call Success!", contact);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 	
 	@GetMapping("/get/{contactId}")
-	public ResponseEntity<String> getEmployeePayrollData(@PathVariable("contactId") int contactId) {
-		return new ResponseEntity<String>("Get Call Success for ID: " + contactId, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("contactId") int contactId) {
+		Contact contact = null;
+		contact = new Contact(1, new ContactDTO("Vishal Gupta", "13, Malta Road"));
+		ResponseDTO responseDTO =  new ResponseDTO("Get Call Success for ID: " + contactId, contact);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+		
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<String> addContact(@RequestBody ContactDTO contactDTO) {
-		return new ResponseEntity<String>("Created Contact for: " + contactDTO, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> addContact(@RequestBody ContactDTO contactDTO) {
+		Contact contact = null;
+		contact = new Contact(1, contactDTO);
+		ResponseDTO responseDTO =  new ResponseDTO("Added Contact Successfully!", contact);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 	
 	@PutMapping("/update/{contactId}")
-	public ResponseEntity<String> updateContact(@PathVariable("contactId") int contactId, 
+	public ResponseEntity<ResponseDTO> updateContact(@PathVariable("contactId") int contactId, 
 												@RequestBody ContactDTO contactDTO) {
-		return new ResponseEntity<String>("Updated Contact for: " + contactDTO, HttpStatus.OK);
+		Contact contact = null;
+		contact = new Contact(contactId, contactDTO);
+		ResponseDTO responseDTO =  new ResponseDTO("Updated Contact Successfully!", contact);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{contactId}")
-	public ResponseEntity<String> deleteContact(@PathVariable("contactId") int contactId) {
-		return new ResponseEntity<String>("Delete Call Success for ID: " + contactId, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> deleteContact(@PathVariable("contactId") int contactId) {
+		ResponseDTO responseDTO =  new ResponseDTO("Deleted Successfully!", "Deleted ID: " + contactId);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 }
