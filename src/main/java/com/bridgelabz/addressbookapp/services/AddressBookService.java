@@ -16,20 +16,18 @@ public class AddressBookService implements IAddressBookService {
 	
 	@Autowired
 	private AddressBookRepository addressBookRepository;
-	
-	private List<Contact> addressBook = new ArrayList<Contact>();
 
 	@Override
 	public List<Contact> getContacts() {
-		return addressBook;
+		return addressBookRepository.findAll();
 	}
 
 	@Override
 	public Contact getContactById(int contactId) {
-		return addressBook.stream()
-						  .filter(contact -> contact.getId() == contactId)
-						  .findFirst()
-						  .orElseThrow(() -> new AddressBookException("Contact Not Found"));
+		if(addressBookRepository.findById(contactId).isEmpty()) {
+			throw new AddressBookException("Contact Not Found");
+		}
+		return addressBookRepository.findById(contactId).get();
 	}
 
 	@Override
@@ -49,14 +47,14 @@ public class AddressBookService implements IAddressBookService {
 		contact.setZip(contactDTO.zip);
 		contact.setPhoneNumber(contactDTO.phoneNumber);
 		contact.setEmail(contactDTO.email);
-		addressBook.set(contactId - 1, contact);
+		addressBookRepository.save(contact);
 		return contact;
 	}
 
 	@Override
 	public void deleteContact(int contactId) {
 		Contact contact =  this.getContactById(contactId);
-		addressBook.remove(contactId - 1);
+		addressBookRepository.delete(contact);
 		
 	}
 

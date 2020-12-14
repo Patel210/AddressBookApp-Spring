@@ -41,6 +41,8 @@ public @Data class Contact {
 	@Column(name = "email")
 	private String email;
 	
+	public Contact() {}
+	
 	public Contact(ContactDTO contactDTO) {
 		super();
 		this.name = contactDTO.name;
