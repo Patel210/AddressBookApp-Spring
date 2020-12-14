@@ -13,6 +13,12 @@ public @Data class ContactDTO {
 	@Pattern(regexp = "^[A-Za-z0-9,\\.]{3,}([\\s][A-Za-z0-9,\\.]{3,}){0,}$", message = "Person Address Invalid")
 	public String address;
 	
+	public String city;
+	public String state;
+	public int zip;
+	public String phoneNumber;
+	public String email;
+	
 	public ContactDTO(String name, String address) {
 		super();
 		this.name = name;
